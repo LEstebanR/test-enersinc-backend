@@ -10,4 +10,15 @@ const getUsers = async (req, res) => {
   }
 }
 
-module.exports = { getUsers };
+const createUser = async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(200).json(user);
+  }catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
+
+
+module.exports = { getUsers, createUser  };
