@@ -22,7 +22,6 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    console.log(req.body);
     const user = await User.findByIdAndDelete(req.body.userId);
     res.status(200).json(user);
   }catch (error) {
@@ -30,6 +29,22 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    res.status(200).json(user);
+  }catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
 
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.body.userId, req.body, {new: true});
+    res.status(200).json(user);
+  }catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
 
-module.exports = { getUsers, createUser, deleteUser  };
+module.exports = { getUsers, createUser, deleteUser, getUser, updateUser };
